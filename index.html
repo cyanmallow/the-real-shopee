@@ -29,21 +29,50 @@
         </div>
 
         <div class="main">
-            <div class="image-carousel"></div>
+            <div class="image-carousel">
+                <div class="slide">
+                    <img src="https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01neSJ5s1R8H52RDtS1_!!2206488662066.jpg" alt="bean" style="height: 400px;">
+                    <div class="text">Bean</div>
+                </div>
+                <div class="slide">
+                    <img src="https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01Mn8ppQ1R8H7T3dxD2_!!0-item_pic.jpg" alt="baghook" style="height: 400px;">
+                    <div class="text">Bag Hook</div>
+                </div>
+                <div class="slide">
+                    <img src="https://img.alicdn.com/imgextra/i1/2206488662066/O1CN019cIcKA1R8Gz4AHj4M_!!2206488662066-0-lubanu-s.jpg" alt="rabbit" style="height: 400px;">
+                    <div class="text">Rabbit</div>
+                </div>
+
+                <!-- next and previous button -->
+                <a class="prev" onclick="plusSlide(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlide(1)">&#10095;</a>
+            </div>
+
+            <!-- dot/circle to switch pic -->
+            <div style="text-align: center;">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+
+        <!-- category part -->
             <div class="category">
-                <a href="/sites/plushie.html" class="all-categories">Plushie</a>
-                <a href="/sites/plushie.html" class="all-categories">Metal Pin</a>
-                <a href="/sites/plushie.html" class="all-categories">Key Charm</a>
-                <a href="/sites/plushie.html" class="all-categories">Bean</a>
-                <a href="/sites/plushie.html" class="all-categories">Figure</a>
-                <a href="/sites/plushie.html" class="all-categories">Rabbit</a>
+                <button class="all-categories">Plushie</button>
+                <button class="all-categories">Metal Pin</button>
+                <button class="all-categories">Key Charm</button>
+                <button class="all-categories">Bean</button>
+                <button class="all-categories">Figure</button>
+                <button class="all-categories">Rabbit</button>
+            </div>
+            <div class="category-items">
+                <div class="each-item">
+                    <!-- display picture, name, quantity, price -->
+                    aa
+                </div>
             </div>
         </div>
 
         <div class="contact">
-            <!-- <ul>
-                <li>Follow us</li>
-            </ul> -->
             <table>
                 <tr>
                     <th>Follow us</th>
@@ -74,5 +103,6 @@
             </table>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

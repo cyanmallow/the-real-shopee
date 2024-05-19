@@ -12,3 +12,4 @@ INSERT INTO items (item_id, item_name, description, price, quantity)
 VALUES (1, 'shirt', 'very durable', 10000, 10000);
 
 SELECT * FROM items;
+

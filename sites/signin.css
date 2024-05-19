@@ -1,0 +1,50 @@
+*{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    color: aliceblue;
+}
+
+#container{
+
+}
+
+/* upper bar */
+.upper-bar{
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background-color: rgb(78, 62, 114);
+}
+
+.login{
+    background-color: rgb(120, 96, 176);
+
+}
+
+form {
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
+label{
+    color: aliceblue;
+}
+
+input{
+    background-color: aliceblue;
+}
+
+a{
+    color: aliceblue;
+}
+/* contact */
+.contact{
+    background-color: rgb(78, 62, 114);
+    margin-left: 20px;
+
+}
