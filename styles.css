@@ -93,10 +93,9 @@ button:hover{
     align-self: center;
     align-items: center;
 }
-.slide image{
+.slide img{
     left: 50%;
-    transform: translateX(-50%);
-    /* how the hell do i center these images?????? */
+    transform: translateX(50%);
 }
 .prev, .next {
     cursor: pointer;
@@ -122,6 +121,7 @@ button:hover{
 
 .text{
     color: black;
+    text-align: center;
 }
 
 /* The dots/bullets/indicators */
@@ -170,6 +170,10 @@ button:hover{
 
 .category-items{
     visibility: hidden;
+}
+.each-item{
+    visibility: hidden;
+    /* TODO: appear after click */
 }
 
 /* contact table */

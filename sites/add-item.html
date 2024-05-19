@@ -3,45 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add more items</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="signin.css">
 </head>
 <body>
-    <div class="container">
+    <div id="container">
         <div class="upper-bar">
             <div class="logo">
                 <img src="/pictures/logo-white.png" alt="logo" height="200px" width="200px">
             </div>
-
-            <div id="signin-signup">
-                <img src="pictures/user_1177568.png" alt="user" id="user">
-                <a href="/sites/signup.html" class="user-login">Sign up</a>
-                <a href="/sites/signin.html" class="user-login">Sign in</a>
-            </div>
         </div>
 
-        <div class="main">
+        <div class="login">
             <form action="add-item.php" class="add-field">
-                <label for="name">Name: </label><br>
+                <label for="name">Item name: </label><br>
                 <input type="text" maxlength="50"><br>
-
-                <label for="description">Description: </label><br>
+    
+                <label for="description">Item description: </label><br>
                 <input type="text" maxlength="225"><br>
-
+    
                 <label for="quantity">Quantity: </label><br>
                 <input type="number"><br>
-
+    
                 <label for="price">Price: </label><br>
                 <input type="number"><br><br>
-
+    
                 <input type="submit" value="Submit data">
-            </form>
+
+            </form>       
         </div>
 
         <div class="contact">
-            <!-- <ul>
-                <li>Follow us</li>
-            </ul> -->
             <table>
                 <tr>
                     <th>Follow us</th>
@@ -72,5 +64,6 @@
             </table>
         </div>
     </div>
+
 </body>
 </html>

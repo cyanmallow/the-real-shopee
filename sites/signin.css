@@ -1,14 +1,14 @@
 *{
+    font-family: "Harmonia Sans", sans-serif;
+    font-size: 12px;
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
-    color: aliceblue;
+    transition: 0.6s ease;
+    
 }
 
-#container{
-
-}
 
 /* upper bar */
 .upper-bar{
@@ -17,12 +17,13 @@
     align-items: center;
     justify-content: center;
     height: 200px;
-    background-color: rgb(78, 62, 114);
+    background-color: rgb(205, 255, 113);
 }
 
 .login{
-    background-color: rgb(120, 96, 176);
-
+    background-color: rgb(252, 255, 209);
+    /* left: 50%;
+    transform: translateX(50%); */
 }
 
 form {
@@ -31,7 +32,7 @@ form {
     justify-content: center;
 }
 
-label{
+/* label{
     color: aliceblue;
 }
 
@@ -41,10 +42,25 @@ input{
 
 a{
     color: aliceblue;
-}
+} */
+
 /* contact */
 .contact{
-    background-color: rgb(78, 62, 114);
+    background-color: rgb(252, 255, 209);
+    border-top: 1px solid black ;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
+table{
+    width: 100%;
     margin-left: 20px;
+}
+tr{
+    gap: 20px;
+    text-align: left;
+}
 
+a:hover{
+    font-weight: 600;
 }
