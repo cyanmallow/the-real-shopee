@@ -6,11 +6,14 @@
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
+    transition: 0.6s ease;
+
 }
 
 button:hover{
     background-color: antiquewhite;
     cursor: pointer;
+    
 }
 /* 
 .container {
@@ -23,11 +26,12 @@ button:hover{
     align-items: center;
     justify-content: center;
     height: 200px;
-    background-color: rgb(78, 62, 114);
+    background-color: rgb(205, 255, 113);
+
 }
 #signin-signup a {
     text-decoration: none;
-    color: aliceblue;
+    color: rgb(2, 75, 140);
 }
 
 #search-bar input{
@@ -65,7 +69,11 @@ button:hover{
 #signin-signup:hover .user-login{
     visibility: visible;
     opacity: 1;
+    
 }
+/* #signin-signup img{
+    cursor: pointer;
+} */
 #shopping-cart{
     margin-right: 15px;
 }
@@ -74,21 +82,128 @@ button:hover{
 }
 /* main */
 .main{
-    background-color: rgb(120, 96, 176);
-}
-.add-field{
-    margin-left: 50px;
-    height: 300px;
+    background-color: rgb(252, 255, 209);
 }
 
-.add-field label{
-    color: aliceblue;
+/* image carousel */
+.image-carousel{
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+}
+.slide{
+    display: none;
+    align-self: center;
+    align-items: center;
+}
+.slide img{
+    left: 50%;
+    transform: translateX(50%);
+}
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+.next{
+    right: 0;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.text{
+    color: black;
+    text-align: center;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    margin-top: 10px;
+}
+.active, .dot:hover{
+    background-color: black;
+}
+
+
+/* category */
+.category{
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    gap: 10px;
+    /* align-items: center; */
+    justify-content: center;
+    /* height: 300px; */
+    margin-top: 10px;
+}
+
+.category button{
+    text-align: center;
+    text-decoration: none;
+    margin-top: 10px;
+    height: 40px;
+    outline: none;
+}
+
+.all-categories {
+    background-color: white;
+    padding: 10px;
+    outline: 1px solid black;
+}
+.all-categories:hover{
+    background-color: rgb(255, 140, 219);
+
+}
+
+.category-items{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.each-item{
+    flex: 1 1 calc(25%);
+    padding: 10px;
+    border: 2px solid red;
+    margin-top: 20px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: aquamarine;
+}
+
+.each-item:hover{
+    background-color: aliceblue;
 }
 
 
 /* contact table */
+.contact{
+    background-color: rgb(252, 255, 209);
+    border-top: 1px solid black ;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
 table{
     width: 100%;
+    margin-left: 20px;
 }
 tr{
     gap: 20px;

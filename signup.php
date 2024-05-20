@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in</title>
-    <link rel="stylesheet" href="signin.css">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="/the-real-shopee/sites/signin.css">
 </head>
 <body>
     <div id="container">
         <div class="upper-bar">
             <div class="logo">
-                <a href="../index.html">
-                    <img src="/pictures/logo-white.png" alt="logo" height="200px" width="200px">
+                <a href="index.html">
+                    <img src="/the-real-shopee/pictures/logo-white.png" alt="logo" height="200px" width="200px">
                 </a>            
             </div>
         </div>
@@ -23,11 +23,15 @@
     
                 <label for="password">Password: </label><br>
                 <input type="text" maxlength="225"><br>
+
+                <label for="password">Repeat password: </label><br>
+                <input type="text" maxlength="225"><br>
+                <!-- check xem co giong password ko -->
     
-                <input type="submit" value="Sign in">
+                <input type="submit" value="Sign up">
 
             </form>
-            No accounts yet?  <a href="signup.html">Sign up</a> now!
+            Already have an account?  <a href="signin.php">Sign in</a> now!
         
         </div>
 

@@ -1,0 +1,100 @@
+/* generic */
+*{
+    font-family: "Harmonia Sans", sans-serif;
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+button:hover{
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+/* 
+.container {
+} */
+
+/* upper bar */
+.upper-bar{
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background-color: rgb(78, 62, 114);
+}
+#signin-signup a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+#search-bar input{
+    align-items: center;
+    width: 300px;
+    height: 30px;
+}
+#search-bar button{
+    outline: none;
+    margin-left: 0;
+    height: 30px;
+
+}
+
+#signin-signup{
+    height: 30px;
+    width: 50px;
+    margin-right: 10px;
+    float: right;
+}
+#user{
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.user-login{
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.5s linear;
+    z-index: 1;
+    position: relative;
+    flex-direction: column;
+    display: flex;
+}
+#signin-signup:hover .user-login{
+    visibility: visible;
+    opacity: 1;
+}
+#shopping-cart{
+    margin-right: 15px;
+}
+#cart{
+    height: 30px;
+}
+/* main */
+.main{
+    background-color: rgb(120, 96, 176);
+}
+.add-field{
+    margin-left: 50px;
+    height: 300px;
+}
+
+.add-field label{
+    color: aliceblue;
+}
+
+
+/* contact table */
+table{
+    width: 100%;
+}
+tr{
+    gap: 20px;
+    text-align: left;
+}
+
+a:hover{
+    font-weight: 600;
+}

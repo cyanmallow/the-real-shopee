@@ -11,7 +11,7 @@
         <div class="upper-bar">
             <div class="logo">
                 <a href="index.html">
-                    <img src="/pictures/logo-white.png" alt="logo" height="200px" width="200px">
+                    <img src="/the-real-shopee/pictures/logo-white.png" alt="logo" height="200px" width="200px">
                 </a>
             </div>
             <div id="search-bar">
@@ -22,8 +22,8 @@
             </div>
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
-                <a href="/sites/signup.html" class="user-login">Sign up</a>
-                <a href="/sites/signin.html" class="user-login">Sign in</a>
+                <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
+                <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
             </div>
             <div id="shopping-cart">
                 <img src="pictures/trolley_4290854.png" alt="cart" id="cart">
@@ -34,27 +34,27 @@
             <div class="image-carousel">
                 <div class="slide">
                     <img src="https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01Mn8ppQ1R8H7T3dxD2_!!0-item_pic.jpg" alt="baghook" style="height: 400px;">
-                    <div class="text">Baghook</div>
+                    <div class="text">Arknights – Ambience Synesthesia 2023 – Baghook Faster and Stronger</div>
                 </div>
                 <div class="slide">
                     <img src="https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01neSJ5s1R8H52RDtS1_!!2206488662066.jpg" alt="bean" style="height: 400px;">
-                    <div class="text">Bean</div>
+                    <div class="text">40cm Ling Bean</div>
                 </div>
                 <div class="slide">
                     <img src="https://resize.cdn.otakumode.com/ex/1014.1000/shop/product/a54d99e142d44da99cc8672d399965b2.jpg" alt="Figure" style="height: 400px;">
-                    <div class="text">Figure</div>
+                    <div class="text">Skadi The Corrupting Heart - Elite II ver. 1/7</div>
                 </div>
                 <div class="slide">
                     <img src="https://i.ebayimg.com/images/g/t~QAAOSwGJxfxMt8/s-l1200.jpg" alt="pin" style="height: 400px;">
-                    <div class="text">Metal Pin</div>
+                    <div class="text">Character Metal Pin Set</div>
                 </div>                
                 <div class="slide">
                     <img src="https://i.ebayimg.com/images/g/4SYAAOSwI7Biw2os/s-l1200.webp" alt="Rabbit" style="height: 400px;">
-                    <div class="text">Rabbit</div>
+                    <div class="text">Official Arknights Rhodes Island CH.O3 Amiya Ver. Rabbit Plush Doll 23cm</div>
                 </div>                
                 <div class="slide">
                     <img src="https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01GkDYEV1R8HAOVBkv7_!!2-item_pic.png" alt="Others" style="height: 400px;">
-                    <div class="text">Others</div>
+                    <div class="text">Muelsyse - Umbrella</div>
                 </div>
 
                 <!-- next and previous button -->
@@ -82,10 +82,42 @@
                 <button class="all-categories">Others</button>
             </div>
             <div class="category-items">
-                <div class="each-item">
                     <!-- display picture, name, quantity, price -->
-                    
-                </div>
+                    <?php 
+                        // Database connection details
+                        $servername = "localhost";
+                        $username = "root"; 
+                        $password = ""; 
+                        $dbname = "shopping-db"; 
+                        
+                        // Create connection
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        
+                        // Check connection
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+                        
+                        // display data
+                        $sql = "SELECT item_name, description, price, quantity FROM items";
+                        $result = $conn->query($sql);
+                        
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<div class='each-item'>";
+                                echo "Name: " . $row["item_name"] . "<br>";
+                                echo "Description: " . $row["description"] . "<br>";
+                                echo "Price: " . $row["price"] . "<br>";
+                                echo "Quantity: " . $row["quantity"] . "<br>";
+                                echo "</div>";
+
+                            }
+                        } else {
+                            echo "0 results";
+                        }
+                        
+                        $conn->close();
+                    ?>
             </div>
         </div>
 
