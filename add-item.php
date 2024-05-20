@@ -18,6 +18,15 @@
 
         <div class="login">
             <form action="" class="add-field" method="POST">
+                <label for="category">Category: </label><br>
+                <input type="radio" name="category" value="baghook">Baghook<br>
+                <input type="radio" name="category" value="bean">Bean<br>
+                <input type="radio" name="category" value="figure">Figure<br>
+                <input type="radio" name="category" value="metalpin">Metal Pin<br>                
+                <input type="radio" name="category" value="rabbit">Rabbit<br>
+                <input type="radio" name="category" value="others">Others<br>
+
+
                 <label for="name">Item name: </label><br>
                 <input type="text" maxlength="50" name="item_name"><br>
     
@@ -32,9 +41,9 @@
     
                 <input type="submit" value="Submit data">
 
-            </form>       
-        </div>
-<?php
+            </form> 
+            
+            <?php
 // Database connection details
 $servername = "localhost";
 $username = "root"; 
@@ -50,14 +59,15 @@ if ($conn->connect_error) {
 }
 
 // Get form data
+$category = $_POST['category'];
 $item_name = $_POST['item_name'];
 $description = $_POST['description'];
 $price = $_POST['price'];
 $quantity = $_POST['quantity'];
 
 // Insert data into database
-$sql = "INSERT INTO items (item_name, description, price, quantity)
-        VALUES ('$item_name', '$description', '$price', '$quantity')";
+$sql = "INSERT INTO items (category, item_name, description, price, quantity)
+        VALUES ('$category', '$item_name', '$description', '$price', '$quantity')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New item added successfully";
@@ -70,7 +80,7 @@ $conn->close();
 
 
 ?>
-
+        </div>
 
         <div class="contact">
             <table>

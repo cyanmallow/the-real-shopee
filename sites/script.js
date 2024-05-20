@@ -45,3 +45,28 @@ function changeSlideAutomatically(){
     }, 2000);
 }
 
+function fetchCategoryItems(category){
+    $.ajax({
+        url: 'fetch-items.php',
+        type: 'POST',
+        data: { category: category},
+        success:function(data){
+            $('#category-items').html(data);
+        }
+    });
+}
+
+// hightlight the selected category
+const selectedCategory = () => {
+    const categoryElement = document.querySelectorAll('.category');
+    const categoryToHighlight = document.getElementById('item_id');
+
+    categoryElement.forEach((item) => {
+        item.removeAttribute("aria-current");
+    });
+    if (categoryToHighlight){
+        categoryToHighlight.setAttribute('aria-current', 'true');
+    }
+};
+
+

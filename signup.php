@@ -10,7 +10,7 @@
     <div id="container">
         <div class="upper-bar">
             <div class="logo">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="/the-real-shopee/pictures/logo-white.png" alt="logo" height="200px" width="200px">
                 </a>            
             </div>

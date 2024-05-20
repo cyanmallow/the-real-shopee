@@ -7,7 +7,6 @@
     margin-left: 0;
     margin-right: 0;
     transition: 0.6s ease;
-
 }
 
 button:hover{
@@ -25,7 +24,7 @@ button:hover{
     grid-template-columns: auto 1fr auto auto;
     align-items: center;
     justify-content: center;
-    height: 200px;
+    height: 160px;
     background-color: rgb(205, 255, 113);
 
 }
@@ -170,9 +169,10 @@ button:hover{
 }
 .all-categories:hover{
     background-color: rgb(255, 140, 219);
-
 }
-
+/* .all-categories:active{
+    background-color: rgb(255, 140, 219);
+} */
 .category-items{
     display: flex;
     gap: 30px;
@@ -212,4 +212,12 @@ tr{
 
 a:hover{
     font-weight: 600;
+}
+
+/* aria-current */
+[aria-current='true']{
+    background-color: rgb(91, 140, 155);
+}
+[aria-current='true'] p {
+    color: bisque;
 }

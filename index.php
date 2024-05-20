@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy the world today!!</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/the-real-shopee/sites/styles.css">
 </head>
 <body>
     <div class="container">
         <div class="upper-bar">
             <div class="logo">
-                <a href="index.html">
-                    <img src="/the-real-shopee/pictures/logo-white.png" alt="logo" height="200px" width="200px">
+                <a href="index.php">
+                    <img src="/the-real-shopee/pictures/logo-white.png" alt="logo" height="150px" style="margin-left: 10px">
                 </a>
             </div>
             <div id="search-bar">
@@ -74,50 +74,15 @@
 
         <!-- category part -->
             <div class="category">
-                <button class="all-categories">Baghook</button>
-                <button class="all-categories">Bean</button>
-                <button class="all-categories">Figure</button>
-                <button class="all-categories">Metal Pin</button>
-                <button class="all-categories">Rabbit</button>
-                <button class="all-categories">Others</button>
+                <button class="all-categories" onclick="fetchCategoryItems('baghook')">Baghook</button>
+                <button class="all-categories" onclick="fetchCategoryItems('bean')">Bean</button>
+                <button class="all-categories" onclick="fetchCategoryItems('figure')">Figure</button>
+                <button class="all-categories" onclick="fetchCategoryItems('metalpin')">Metal Pin</button>
+                <button class="all-categories" onclick="fetchCategoryItems('rabbit')">Rabbit</button>
+                <button class="all-categories" onclick="fetchCategoryItems('others')">Others</button>
             </div>
-            <div class="category-items">
-                    <!-- display picture, name, quantity, price -->
-                    <?php 
-                        // Database connection details
-                        $servername = "localhost";
-                        $username = "root"; 
-                        $password = ""; 
-                        $dbname = "shopping-db"; 
-                        
-                        // Create connection
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-                        
-                        // Check connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
-                        
-                        // display data
-                        $sql = "SELECT item_name, description, price, quantity FROM items";
-                        $result = $conn->query($sql);
-                        
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<div class='each-item'>";
-                                echo "Name: " . $row["item_name"] . "<br>";
-                                echo "Description: " . $row["description"] . "<br>";
-                                echo "Price: " . $row["price"] . "<br>";
-                                echo "Quantity: " . $row["quantity"] . "<br>";
-                                echo "</div>";
-
-                            }
-                        } else {
-                            echo "0 results";
-                        }
-                        
-                        $conn->close();
-                    ?>
+            <div class="category-items" id="category-items">
+            <!-- move php to fetch-items.php -->
             </div>
         </div>
 
@@ -152,6 +117,8 @@
             </table>
         </div>
     </div>
-    <script src="script.js"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/the-real-shopee/sites/script.js"></script>
 </body>
 </html>
