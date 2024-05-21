@@ -177,21 +177,31 @@ button:hover{
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
+    margin-left: 20px;
+    margin-right: 20px;
+
 }
 
 .each-item{
-    flex: 1 1 calc(25%);
+    /* flex: 1 1 calc(20%); */
+    /* flex: 1 1 calc(25%); */
+
     padding: 10px;
     border: 2px solid red;
     margin-top: 20px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     background-color: aquamarine;
+    height: 300px;
+    width: 200px;
 }
 
 .each-item:hover{
     background-color: aliceblue;
+    cursor: pointer;
 }
-
+.each-item img{
+    height: 200px;
+}
 
 /* contact table */
 .contact{

@@ -17,7 +17,7 @@ if (isset($_POST['category'])) {
     }
 
     // Prepare and execute the query
-    $sql = $conn->prepare("SELECT item_name, description, price, quantity FROM items WHERE category = ?");
+    $sql = $conn->prepare("SELECT item_name, description, price, quantity, image_url FROM items WHERE category = ?");
     if ($sql) {
         $sql->bind_param("s", $category);
         $sql->execute();
@@ -31,6 +31,7 @@ if (isset($_POST['category'])) {
                     echo "Description: " . $row["description"] . "<br>";
                     echo "Price: " . $row["price"] . "<br>";
                     echo "Quantity: " . $row["quantity"] . "<br>";
+                    echo "<img src='" . $row["image_url"] . "' alt='Image of " . $row["item_name"] . "'><br>";
                     echo "</div>";
                 }
             } else {

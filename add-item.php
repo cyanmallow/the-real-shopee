@@ -38,6 +38,9 @@
     
                 <label for="price">Price: </label><br>
                 <input type="number" name="price"><br><br>
+
+                <label for="image_url">Image link: </label><br>
+                <input type="text" maxlength="225" name="image_url"><br>
     
                 <input type="submit" value="Submit data">
 
@@ -66,8 +69,8 @@ $price = $_POST['price'];
 $quantity = $_POST['quantity'];
 
 // Insert data into database
-$sql = "INSERT INTO items (category, item_name, description, price, quantity)
-        VALUES ('$category', '$item_name', '$description', '$price', '$quantity')";
+$sql = "INSERT INTO items (category, item_name, description, price, quantity, image_url)
+        VALUES ('$category', '$item_name', '$description', '$price', '$quantity', '$image_url')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New item added successfully";
