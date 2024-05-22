@@ -26,8 +26,11 @@
                 <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
             </div>
             <div id="shopping-cart">
-                <img src="pictures/trolley_4290854.png" alt="cart" id="cart">
+                <a href="items_in_cart.php">
+                    <img src="pictures/trolley_4290854.png" alt="cart" id="cart">
+                </a>            
             </div>
+            <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
         </div>
 
         <div class="main">

@@ -27,11 +27,12 @@ if (isset($_POST['category'])) {
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<div class='each-item'>";
-                    echo "Name: " . $row["item_name"] . "<br>";
-                    echo "Description: " . $row["description"] . "<br>";
-                    echo "Price: " . $row["price"] . "<br>";
-                    echo "Quantity: " . $row["quantity"] . "<br>";
+                    echo "<a href='item_details.php?item_name=" .$row['item_name']."'>";
                     echo "<img src='" . $row["image_url"] . "' alt='Image of " . $row["item_name"] . "'><br>";
+                    echo "" . $row["item_name"] . "<br>";
+                    echo "" . $row["price"] . " dong<br>";
+                    echo "" . $row["quantity"] . " left<br>";
+                    echo "</a>";
                     echo "</div>";
                 }
             } else {

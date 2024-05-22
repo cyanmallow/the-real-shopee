@@ -225,6 +225,7 @@ a:hover{
 }
 
 /* aria-current */
+/* not working rn */
 [aria-current='true']{
     background-color: rgb(91, 140, 155);
 }
