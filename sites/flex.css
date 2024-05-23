@@ -1,0 +1,45 @@
+.flex-container {
+    display: grid;
+    margin-left: 10px;
+    margin-right: 10px;
+    align-items: start;
+    flex
+}
+
+.flex-img{
+    grid-column: 1/5;
+    grid-row: 1/7;
+}
+
+.flex-name{
+    font-size: 16px;
+    grid-column: 5/7;
+    grid-row: 1/2;
+}
+
+.flex-price{
+    grid-column: 5/7;
+    grid-row: 3/4;
+}
+.flex-quality{
+    grid-column: 5/7;
+    grid-row: 4/5;
+}
+
+
+.description{
+    background-color: rgb(252, 255, 209);
+    width: 100%;
+}
+
+.description h2 {
+    /* margin-top: 20px; */
+    margin-left: 10px;
+    background-color: rgb(252, 255, 209);
+
+}
+
+.flex-description{
+    margin-top: 20px;
+    margin-left: 10px;
+}

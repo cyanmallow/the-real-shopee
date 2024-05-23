@@ -62,13 +62,20 @@
             if ($result -> num_rows > 0) {
                 $item = $result -> fetch_assoc();
 
-                echo "Name: " . $item["item_name"] . "<br>";
-                echo "Description: " . $item["description"] . "<br>";
-                echo "Price: " . $item["price"] . "<br>";
-                echo "Quantity: " . $item["quantity"] . "<br>";
-                echo "<img src='" . $item["image_url"] . "' alt='Image of " . $item["item_name"] . "'><br>";
+                // add css flex
+                echo "<link rel='stylesheet' href='/the-real-shopee/sites/flex.css'>";
 
+                // add flex
+                echo "<div class='flex-container'>";
+                echo "<div class='flex-name'>" . $item["item_name"] . "</div>";
+                echo "<div class='flex-price'>Price: " . $item["price"] . "</div>";
+                echo "<div class='flex-quality'>There's only " . $item["quantity"] . " left!! </div>";
+                echo "<div class='flex-img'><img src='" . $item["image_url"] . "' alt='Image of " . $item["item_name"] . "'></div>";
+                echo "</div>";
                 echo "<title>" . htmlspecialchars($item["item_name"]) . "</title>";
+                // TODO: change to button
+                echo "<a href='/the-real-shopee/items_in_cart.php'>Add to cart</a>";
+                echo "<a href='/the-real-shopee/buy.php'>Buy now</a>";
 
             } else {
                 echo "Item not found.";
@@ -80,6 +87,13 @@
         ?>
         </div>
 
+        <div class="description">
+            <h2>Description</h2>
+            <?php
+                echo "<div class='flex-description'><br>" . $item["description"] . "</div>";
+            ?>
+        </div>
+
         <div class="contact">
             <table>
                 <tr>
@@ -88,6 +102,7 @@
                     <th>Policy</th>
                 </tr>
                 <tr>
+                    <button ></button>
                     <td><a href="https://github.com/cyanmallow">Github</a></td>
                     <td>ggmmallow@gmail.com</td>
                     <td>Terms & Conditions</td>
