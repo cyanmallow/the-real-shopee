@@ -69,4 +69,10 @@ const selectedCategory = () => {
     }
 };
 
+// const cartButton = document.getElementById('cart');
+// cartButton.addEventListener('click', openCart);
+
+// const openCart = () => {
+//     //TODO: once click, open cart
+// }
 

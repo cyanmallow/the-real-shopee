@@ -68,14 +68,24 @@
                 // add flex
                 echo "<div class='flex-container'>";
                 echo "<div class='flex-name'>" . $item["item_name"] . "</div>";
-                echo "<div class='flex-price'>Price: " . $item["price"] . "</div>";
-                echo "<div class='flex-quality'>There's only " . $item["quantity"] . " left!! </div>";
+                echo "<div class='flex-price'>₫ " . $item["price"] . "</div>";
+                echo "<div class='flex-quality'>Only " . $item["quantity"] . " left!! Get yours today!</div>";
                 echo "<div class='flex-img'><img src='" . $item["image_url"] . "' alt='Image of " . $item["item_name"] . "'></div>";
+                echo "<button id='cart' type='submit'>Add to cart</button>";
+                echo "<button id='buy' type='submit'>Buy now</button>";
                 echo "</div>";
                 echo "<title>" . htmlspecialchars($item["item_name"]) . "</title>";
-                // TODO: change to button
-                echo "<a href='/the-real-shopee/items_in_cart.php'>Add to cart</a>";
-                echo "<a href='/the-real-shopee/buy.php'>Buy now</a>";
+
+                // add item to cart 
+                $sql = "INSERT INTO cart_items (cart_id, item_id, quantity)
+                        VALUES ('$category', '$item_name', '$description', '$price', '$quantity', '$image_url')";
+                
+                if ($conn->query($sql) === TRUE) {
+                    echo "Added to cart";
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+
 
             } else {
                 echo "Item not found.";
@@ -126,8 +136,7 @@
             </table>
         </div>
     </div>
-    <!-- jquery -->
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="/the-real-shopee/sites/script.js"></script> -->
+
+    <script src="/the-real-shopee/sites/script.js"></script> 
 </body>
 </html>
