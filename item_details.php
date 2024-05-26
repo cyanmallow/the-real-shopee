@@ -1,3 +1,84 @@
+
+<?php
+// echo "Form submitted!";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+// error: undefined $conn, so adding this to check
+// Database connection details
+$servername = "localhost";
+$username = "root"; 
+$password = ""; 
+$dbname = "shopping-db"; 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+function addItemToCart($conn, $cart_id, $item_id, $quantity) {
+    // Check if the item already exists in the cart
+    $sql = "SELECT quantity FROM cart_items WHERE cart_id = ? AND item_id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+        return;
+    }
+
+    $stmt->bind_param("ii", $cart_id, $item_id);
+    $stmt->execute();
+    $stmt->store_result();
+    
+    if ($stmt->num_rows > 0) {
+        // Item exists, update quantity
+        $stmt->bind_result($existing_quantity);
+        $stmt->fetch();
+        $new_quantity = $existing_quantity + $quantity;
+        $update_sql = "UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND item_id = ?";
+        $update_stmt = $conn->prepare($update_sql);
+        
+        if (!$update_stmt) {
+            echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+            return;
+        }
+
+        $update_stmt->bind_param("iii", $new_quantity, $cart_id, $item_id);
+        $update_stmt->execute();
+        $update_stmt->close();
+    } else {
+        // Item does not exist, insert new record
+        $insert_sql = "INSERT INTO cart_items (cart_id, item_id, quantity) VALUES (?, ?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        
+        if (!$insert_stmt) {
+            echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+            return;
+        }
+
+        $insert_stmt->bind_param("iii", $cart_id, $item_id, $quantity);
+        $insert_stmt->execute();
+        $insert_stmt->close();
+    }
+    
+    $stmt->close();
+}
+
+// Assuming you have a cart_id (usually you get this from session or user authentication)
+$cart_id = 1; // Example cart_id, replace with actual logic
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $item_id = $_POST['item_id'];
+    $quantity = $_POST['quantity'];
+    addItemToCart($conn, $cart_id, $item_id, $quantity);
+    // header("Location: items_in_cart.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,23 +113,8 @@
         </div>
 
         <div class="main">
-            
-        <!-- database -->
         <?php
 
-        // Database connection details
-        $servername = "localhost";
-        $username = "root"; 
-        $password = ""; 
-        $dbname = "shopping-db"; 
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
 
         // Get the item ID from the query parameter
         $item_name = isset($_GET['item_name']) ? ($_GET['item_name']) : '';
@@ -71,21 +137,21 @@
                 echo "<div class='flex-price'>₫ " . $item["price"] . "</div>";
                 echo "<div class='flex-quality'>Only " . $item["quantity"] . " left!! Get yours today!</div>";
                 echo "<div class='flex-img'><img src='" . $item["image_url"] . "' alt='Image of " . $item["item_name"] . "'></div>";
-                echo "<button id='cart' type='submit'>Add to cart</button>";
-                echo "<button id='buy' type='submit'>Buy now</button>";
-                echo "</div>";
-                echo "<title>" . htmlspecialchars($item["item_name"]) . "</title>";
+                // echo "<input type='hidden' name='item_id' value='" . htmlspecialchars($item["item_id"]) . "'>";
 
                 // add item to cart 
-                $sql = "INSERT INTO cart_items (cart_id, item_id, quantity)
-                        VALUES ('$category', '$item_name', '$description', '$price', '$quantity', '$image_url')";
-                
-                if ($conn->query($sql) === TRUE) {
-                    echo "Added to cart";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
+                // Wrap the "Add to Cart" button in a form and 
+                // include hidden input fields for item_id and quantity.
+                echo "<form class='flex-form' action='item_details.php' method='POST'>";
+                echo "<input type='hidden' name='item_id' value='" . htmlspecialchars($item["item_id"]) . "'>";
+                echo "<input type='hidden' name='quantity' value='1'>";
+        
+                echo "<button id='cart' type='submit'>Add to cart</button>";
+                echo "<button id='buy' type='submit'>Buy now</button>";
+                echo "</form>";
 
+                echo "</div>";
+                echo "<title>" . htmlspecialchars($item["item_name"]) . "</title>";
 
             } else {
                 echo "Item not found.";
@@ -112,7 +178,6 @@
                     <th>Policy</th>
                 </tr>
                 <tr>
-                    <button ></button>
                     <td><a href="https://github.com/cyanmallow">Github</a></td>
                     <td>ggmmallow@gmail.com</td>
                     <td>Terms & Conditions</td>
@@ -137,6 +202,6 @@
         </div>
     </div>
 
-    <script src="/the-real-shopee/sites/script.js"></script> 
+    <!-- <script src="/the-real-shopee/sites/script.js"></script>  -->
 </body>
 </html>

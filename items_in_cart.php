@@ -28,32 +28,9 @@ function getCartItems($conn, $cart_id) {
     $stmt->close();
     return $items;
 }
-
-// Initialize cart items variable
-$cart_items = [];
-
-// Assuming you have a cart_id (usually you get this from session or user authentication)
-$cart_id = 1; // Example cart_id, replace with actual logic
-
-// Fetch cart items
-$cart_items = getCartItems($conn, $cart_id);
-
-// Handle form submissions for updating quantity and deleting items
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['update_quantity'])) {
-        $cart_item_id = $_POST['cart_item_id'];
-        $quantity = $_POST['quantity'];
-        updateItemQuantity($conn, $cart_item_id, $quantity);
-    }
-    if (isset($_POST['delete_item'])) {
-        $cart_item_id = $_POST['cart_item_id'];
-        deleteCartItem($conn, $cart_item_id);
-    }
-}
-/////////////////////////////////////////
 // when user clicked button, update item quantity
 function updateItemQuantity($conn, $cart_item_id, $quantity) {
-    $sql = "UPDATE cart-items SET quantity = 3 WHERE cart-item-id = 1;";
+    $sql = "UPDATE cart-items SET quantity = ? WHERE cart-item-id = ?;";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $cart_item_id);
     $stmt->execute();
@@ -69,6 +46,29 @@ function deleteCartItem($conn, $cart_item_id) {
     $stmt->close();
 }
 
+// Initialize cart items variable
+// $cart_items = [];
+
+// Assuming you have a cart_id (usually you get this from session or user authentication)
+$cart_id = 1; // Example cart_id, replace with actual logic
+
+// Fetch cart items
+$cart_items = getCartItems($conn, $cart_id);
+
+// form submissions for updating quantity and deleting items
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['update_quantity'])) {
+        $cart_item_id = $_POST['cart_item_id'];
+        $quantity = $_POST['quantity'];
+        updateItemQuantity($conn, $cart_item_id, $quantity);
+    }
+    if (isset($_POST['delete_item'])) {
+        $cart_item_id = $_POST['cart_item_id'];
+        deleteCartItem($conn, $cart_item_id);
+    }
+    // update cart_items
+    $cart_items = getCartItems($conn, $cart_id);
+}
 // Close connection
 $conn->close();
 ?>
@@ -130,6 +130,13 @@ $conn->close();
                                 <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
                                 <button type="submit" name="update_quantity">Update</button>
                             </form>
+                            <?php
+    $item_id = $_POST['item_id'];
+    $quantity = $_POST['quantity'];
+    echo "Item ID: " . $item_id . "<br>";
+    echo "Quantity: " . $quantity . "<br>";
+    
+                            ?>
                             <!-- Form to delete item -->
                             <form method="POST" style="display: inline;">
                                 <input type="hidden" name="cart_item_id" value="<?php echo $item['cart_item_id']; ?>">
