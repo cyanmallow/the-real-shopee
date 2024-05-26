@@ -18,7 +18,7 @@
         </div>
 
         <div class="login">
-            <form action="process-signup.php" class="add-field" method="POST">
+            <form action="process-signup.php" method="POST" class="add-field">
                 <label for="username">Username: </label><br>
                 <input type="text" maxlength="50" name="username"><br>
     
@@ -29,7 +29,7 @@
                 <input type="password" maxlength="225" name="repeat_password"><br>
                 <!-- check xem co giong password ko -->
     
-                <input type="submit" value="Sign up">
+                <button type="submit">Sign up</button>
 
             </form>
             Already have an account?  <a href="signin.php">Sign in</a> now!
