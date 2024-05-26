@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add items for seller</title>
     <link rel="stylesheet" href="/the-real-shopee/sites/signin.css">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+
 </head>
 <body>
     <div id="container">
@@ -19,13 +21,14 @@
         <div class="login">
             <form action="" class="add-field" method="POST">
                 <label for="category">Category: </label><br>
-                <input type="radio" name="category" value="baghook">Baghook<br>
-                <input type="radio" name="category" value="bean">Bean<br>
-                <input type="radio" name="category" value="figure">Figure<br>
-                <input type="radio" name="category" value="metalpin">Metal Pin<br>                
-                <input type="radio" name="category" value="rabbit">Rabbit<br>
-                <input type="radio" name="category" value="others">Others<br>
-
+                <select id="category" name="category">
+                    <option value="baghook">Baghook<br>
+                    <option value="bean">Bean<br>
+                    <option value="figure">Figure<br>
+                    <option value="metalpin">Metal Pin<br>                
+                    <option value="rabbit">Rabbit<br>
+                    <option value="others">Others<br>
+                </select>
 
                 <label for="name">Item name: </label><br>
                 <input type="text" maxlength="50" name="item_name"><br>
@@ -46,6 +49,7 @@
 
             </form> 
             
+            <!-- process the above form -->
             <?php
 // Database connection details
 $servername = "localhost";
@@ -67,6 +71,7 @@ $item_name = $_POST['item_name'];
 $description = $_POST['description'];
 $price = $_POST['price'];
 $quantity = $_POST['quantity'];
+$image_url = $_POST['image_url'];
 
 // Insert data into database
 $sql = "INSERT INTO items (category, item_name, description, price, quantity, image_url)

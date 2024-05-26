@@ -79,6 +79,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/the-real-shopee/sites/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+
 </head>
 <body>
     <div class="container">
@@ -162,7 +164,6 @@ $conn->close();
                     <th>Policy</th>
                 </tr>
                 <tr>
-                    <button ></button>
                     <td><a href="https://github.com/cyanmallow">Github</a></td>
                     <td>ggmmallow@gmail.com</td>
                     <td>Terms & Conditions</td>

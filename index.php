@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy the world today!!</title>
     <link rel="stylesheet" href="/the-real-shopee/sites/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container"> -->
         <div class="upper-bar">
             <div class="logo">
                 <a href="index.php">
@@ -30,10 +32,11 @@
                     <img src="pictures/trolley_4290854.png" alt="cart" id="cart">
                 </a>            
             </div>
-            <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
         </div>
 
         <div class="main">
+        <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
+
             <div class="image-carousel">
                 <div class="slide">
                     <img src="https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01Mn8ppQ1R8H7T3dxD2_!!0-item_pic.jpg" alt="baghook" style="height: 400px;">
@@ -118,7 +121,7 @@
                     <td>VAT Policy</td>
                 </tr>
             </table>
-        </div>
+        <!-- </div> -->
     </div>
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
