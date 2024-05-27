@@ -1,22 +1,10 @@
 
 <?php
+session_start();
 // echo "Form submitted!";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// error: undefined $conn, so adding this to check
-// Database connection details
-$servername = "localhost";
-$username = "root"; 
-$password = ""; 
-$dbname = "shopping-db"; 
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = require __DIR__ ."/database.php";
 
 function addItemToCart($conn, $cart_id, $item_id, $quantity) {
     // Check if the item already exists in the cart
@@ -66,13 +54,50 @@ function addItemToCart($conn, $cart_id, $item_id, $quantity) {
     $stmt->close();
 }
 
+// Check if the user is logged in
+if (!isset($_SESSION["user_id"])) {
+    die("You must be logged in to add items to the cart.");
+}
+
 $user_id = $_SESSION["user_id"];
+// $cart_id = $_SESSION["cart_id"];
+
+///////////////////////////
+// Check if user has an existing cart
+$sql = "SELECT cart_id FROM carts WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->store_result();
+
+if ($stmt->num_rows > 0) {
+    // User has an existing cart, retrieve it
+    $stmt->bind_result($cart_id);
+    $stmt->fetch();
+} else {
+    // No existing cart, create a new one
+    $cart_id = createNewCart($conn, $user_id);
+}
+$stmt->close();
+
+// Function to create a new cart
+function createNewCart($conn, $user_id) {
+    $sql = "INSERT INTO carts (user_id) VALUES (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $cart_id = $stmt->insert_id;
+    $stmt->close();
+    return $cart_id;
+}
+
+//////////////////////
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_id = $_POST['item_id'];
     $quantity = $_POST['quantity'];
     addItemToCart($conn, $cart_id, $item_id, $quantity);
-    // header("Location: items_in_cart.php");
+    header("Location: items_in_cart.php");
     exit;
 }
 
@@ -103,8 +128,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
-                <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
-                <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php if(isset($_SESSION["user_id"])):?>
+                    <a href="/the-real-shopee/signout.php" class="user-login">Sign out</a>
+                <?php else:?>
+                    <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
+                    <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php endif;?>  
             </div>
             <div id="shopping-cart">
                 <a href="items_in_cart.php">
@@ -202,7 +231,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
         </div>
     </div>
-
-    <!-- <script src="/the-real-shopee/sites/script.js"></script>  -->
 </body>
 </html>

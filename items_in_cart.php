@@ -30,9 +30,9 @@ function getCartItems($conn, $cart_id) {
 }
 // when user clicked button, update item quantity
 function updateItemQuantity($conn, $cart_item_id, $quantity) {
-    $sql = "UPDATE cart-items SET quantity = ? WHERE cart-item-id = ?;";
+    $sql = "UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?;";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $cart_item_id);
+    $stmt->bind_param("ii", $quantity, $cart_item_id);
     $stmt->execute();
     $stmt->close();
 }
@@ -97,8 +97,12 @@ $conn->close();
             </div>
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
-                <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
-                <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php if(isset($_SESSION["user_id"])):?>
+                    <a href="/the-real-shopee/signout.php" class="user-login">Sign out</a>
+                <?php else:?>
+                    <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
+                    <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php endif;?>  
             </div>
             <div id="shopping-cart">
                 <a href="items_in_cart.php">
@@ -121,7 +125,7 @@ $conn->close();
                 <?php foreach ($cart_items as $item) : ?>
                     <tr>
                         <td><img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="image" height="50px"></td>
-                        <td><?php echo htmlspecialchars($item['name']); ?></td>
+                        <td><?php echo htmlspecialchars($item['item_name']); ?></td>
                         <td><?php echo number_format($item['price']); ?></td>
                         <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                         <td><?php echo number_format($item['price']*$item['quantity']); ?></td>

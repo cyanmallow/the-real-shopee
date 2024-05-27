@@ -33,8 +33,7 @@ session_start();
                 <?php else:?>
                     <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
                     <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
-                <?php endif;?>
-                
+                <?php endif;?>  
             </div>
             <div id="shopping-cart">
                 <a href="items_in_cart.php">
@@ -44,10 +43,7 @@ session_start();
         </div>
 
         <div class="main">
-
-        
-            <!-- <a href="/the-real-shopee/signout.php">Sign out</a> -->
-        <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
+              <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
 
             <div class="image-carousel">
                 <div class="slide">

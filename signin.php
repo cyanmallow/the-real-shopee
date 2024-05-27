@@ -2,22 +2,54 @@
 $is_invalid = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST"){
-    $mysqli = require __DIR__ ."/database.php";
+    $conn = require __DIR__ ."/database.php";
 
-    $sql = sprintf("SELECT * FROM users WHERE username ='%s'", $mysqli->real_escape_string($_POST["username"]));
-    $result = $mysqli->query($sql);
+    $sql = sprintf("SELECT * FROM users WHERE username ='%s'", $conn->real_escape_string($_POST["username"]));
+    $result = $conn->query($sql);
     $user = $result->fetch_assoc();
     
     if ($user){
         if (password_verify($_POST["password"], $user["password_hash"])){
             session_start();
             $_SESSION["user_id"] = $user["user_id"];
+
+
+            // add cart
+    // check if user has an existing cart
+    $sql = "SELECT cart_id FROM carts WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        // User has an existing cart, retrieve it
+        $stmt->bind_result($cart_id);
+        $stmt->fetch();
+    } else {
+        // No existing cart, create a new one
+        $cart_id = createNewCart($conn, $user_id);
+    }
+    $_SESSION['cart_id'] = $cart_id; // Store cart_id in session
+    $stmt->close();
+
+
+
             header("Location: index.php");
             exit;
-        };
+        }
     }
     $is_invalid = true;
-    }
+}
+function createNewCart($conn, $user_id) {
+    $sql = "INSERT INTO carts (user_id) VALUES (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $cart_id = $stmt-> insert_id;
+    $stmt-> close();
+    return $cart_id;
+}    
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
     <title>Sign in</title>
     <link rel="stylesheet" href="/the-real-shopee/sites/signin.css">
     <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
-    <!-- <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js" defer ></script>
-    <script src="/the-real-shopee/sites/validation.js" defer></script> -->
 </head>
 <body>
     <div id="container">
