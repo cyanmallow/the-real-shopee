@@ -132,13 +132,6 @@ $conn->close();
                                 <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
                                 <button type="submit" name="update_quantity">Update</button>
                             </form>
-                            <?php
-    $item_id = $_POST['item_id'];
-    $quantity = $_POST['quantity'];
-    echo "Item ID: " . $item_id . "<br>";
-    echo "Quantity: " . $quantity . "<br>";
-    
-                            ?>
                             <!-- Form to delete item -->
                             <form method="POST" style="display: inline;">
                                 <input type="hidden" name="cart_item_id" value="<?php echo $item['cart_item_id']; ?>">

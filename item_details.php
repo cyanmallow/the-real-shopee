@@ -66,8 +66,7 @@ function addItemToCart($conn, $cart_id, $item_id, $quantity) {
     $stmt->close();
 }
 
-// Assuming you have a cart_id (usually you get this from session or user authentication)
-$cart_id = 1; // Example cart_id, replace with actual logic
+$user_id = $_SESSION["user_id"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_id = $_POST['item_id'];

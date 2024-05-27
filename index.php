@@ -1,3 +1,7 @@
+<?php 
+session_start();
+// print_r($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +28,13 @@
             </div>
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
-                <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
-                <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php if(isset($_SESSION["user_id"])):?>
+                    <a href="/the-real-shopee/signout.php" class="user-login">Sign out</a>
+                <?php else:?>
+                    <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
+                    <a href="/the-real-shopee/signin.php" class="user-login">Sign in</a>
+                <?php endif;?>
+                
             </div>
             <div id="shopping-cart">
                 <a href="items_in_cart.php">
@@ -35,6 +44,9 @@
         </div>
 
         <div class="main">
+
+        
+            <!-- <a href="/the-real-shopee/signout.php">Sign out</a> -->
         <a href="/the-real-shopee/add-item.php">Debug: Add item for admin</a>
 
             <div class="image-carousel">

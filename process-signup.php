@@ -25,7 +25,8 @@ if ( !$stmt->prepare($sql)) {
 
 $stmt->bind_param("ss", $_POST["username"], $password_hash);
 if ($stmt->execute()){
-    echo"Sign up successful! Log in now!";
+    header("Location: signup-success.php");
+    exit;
 } else {
     die("error: ". $mysqli->error);
 };
