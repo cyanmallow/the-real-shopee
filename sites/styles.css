@@ -1,4 +1,4 @@
-/* generic */
+/* generic
 *{
     font-family: "Harmonia Sans", sans-serif;
     font-size: 12px;
@@ -7,15 +7,6 @@
     margin-left: 0;
     margin-right: 0;
     transition: 0.6s ease;
-}
-
-button:hover{
-    background-color: antiquewhite;
-    cursor: pointer;
-    
-}
-/* 
-.container {
 } */
 
 /* upper bar */
@@ -38,12 +29,12 @@ button:hover{
     width: 300px;
     height: 30px;
 }
-#search-bar button{
+/* #search-bar button{
     outline: none;
     margin-left: 0;
     height: 30px;
 
-}
+} */
 
 #signin-signup{
     height: 30px;
@@ -69,7 +60,6 @@ button:hover{
 #signin-signup:hover .user-login{
     visibility: visible;
     opacity: 1;
-    
 }
 /* #signin-signup img{
     cursor: pointer;
@@ -164,9 +154,10 @@ button:hover{
 }
 
 .all-categories {
-    background-color: white;
+    background-color: rgb(208, 255, 0);
     padding: 10px;
     outline: 1px solid black;
+    color: black;
 }
 .all-categories:hover{
     background-color: rgb(255, 140, 219);

@@ -243,8 +243,6 @@ function getAddress($conn, $user_id) {
             </table>
         </div>
     </div>
-
-    <script src="/the-real-shopee/sites/item_details.js"></script> 
 </body>
 </html>
 

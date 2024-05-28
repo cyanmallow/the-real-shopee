@@ -43,14 +43,14 @@
     grid-row: 4/5;
 }
 
-#cart{
+/* #cart{
     grid-column: 3/4;
     grid-row: 4/5;
 }
 #buy{
     grid-column: 6/7;
     grid-row: 4/5;
-}
+} */
 
 .description{
     background-color: rgb(252, 255, 209);
@@ -68,8 +68,8 @@
     margin-top: 20px;
     margin-left: 10px;
 }
-
+/* 
 .flex-container button{
     width: 150px;
     height: 30px;
-}
+} */

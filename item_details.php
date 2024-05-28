@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<input type='hidden' name='item_id' value='" . htmlspecialchars($item["item_id"]) . "'>";
                 echo "<input type='hidden' name='quantity' value='1'>";
         
-                echo "<button id='cart' type='submit'>Add to cart</button>";
+                echo "<button id='add-to-cart' type='submit'>Add to cart</button>";
                 echo "<button id='buy' type='submit'>Buy now</button>";
                 echo "</form>";
 
