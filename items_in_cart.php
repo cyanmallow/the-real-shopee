@@ -57,8 +57,8 @@ $conn->close();
 // get cart items
 function getCartItems($conn, $cart_id) {
     $sql = "SELECT ci.cart_item_id, ci.quantity, i.item_name, i.price, i.image_url
-    FROM cart_items ci
-    JOIN items i ON ci.item_id = i.item_id
+    FROM cart_items ci JOIN items i 
+    ON ci.item_id = i.item_id
     WHERE ci.cart_id =?";
     $stmt = $conn   ->prepare($sql);
     $stmt->bind_param("i", $cart_id);

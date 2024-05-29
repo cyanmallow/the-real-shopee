@@ -29,6 +29,7 @@ session_start();
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
                 <?php if(isset($_SESSION["user_id"])):?>
+                    <a href="/the-real-shopee/user.php" class="user-login">User info</a>
                     <a href="/the-real-shopee/signout.php" class="user-login">Sign out</a>
                 <?php else:?>
                     <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
