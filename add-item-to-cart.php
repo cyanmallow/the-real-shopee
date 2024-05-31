@@ -1,20 +1,8 @@
 <?php
-    // Database connection details
-    $servername = "localhost";
-    $username = "root"; 
-    $password = ""; 
-    $dbname = "shopping-db"; 
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $conn = require __DIR__ ."/database.php";
 
     // cart_id :(
-    $cart_id = 1;
+    // $cart_id = 1;
     echo "Form submitted!";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $item_id = $_POST['item_id'];

@@ -1,20 +1,8 @@
 <?php
 if (isset($_POST['category'])) {
     $category = $_POST['category'];
-
-    // Database connection details
-    $servername = "localhost";
-    $username = "root"; 
-    $password = ""; 
-    $dbname = "shopping-db"; 
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
+    $conn = require __DIR__ ."/database.php";
 
     // Prepare and execute the query
     $sql = $conn->prepare("SELECT item_name, description, price, quantity, image_url FROM items WHERE category = ?");

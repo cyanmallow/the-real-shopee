@@ -63,7 +63,7 @@ $conn->close();
                 echo "Address: ". $address; ?><br><?php
             ?>
             <form action="change_user_data.php" method="POST">
-                <input type="text" name="new_address" placeholder="New address">
+                <input type="text" name="new_address" placeholder="New address, WIP">
                 <button type="submit">Change</button>
             </form>
         </div>

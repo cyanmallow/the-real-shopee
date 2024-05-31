@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 // echo "Form submitted!";
@@ -62,7 +61,6 @@ if (!isset($_SESSION["user_id"])) {
 $user_id = $_SESSION["user_id"];
 // $cart_id = $_SESSION["cart_id"];
 
-///////////////////////////
 // Check if user has an existing cart
 $sql = "SELECT cart_id FROM carts WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
@@ -121,16 +119,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </a>
             </div>
             <div id="search-bar">
-                <!-- the damn bar -->
-                <input type="text" placeholder="What do you want to buy~">
-                <button type="submit">Search</button>
-                <!-- trending items -->
+                <form action="search.php" method="GET">
+                    <input type="text" placeholder="WIP...">
+                    <button type="submit">Search</button>
+                </form>
             </div>
             <div id="signin-signup">
                 <img src="pictures/user_1177568.png" alt="user" id="user">
                 <?php if(isset($_SESSION["user_id"])):?>
+                    <a href="/the-real-shopee/user.php" class="user-login">Change address</a>
                     <a href="/the-real-shopee/signout.php" class="user-login">Sign out</a>
-                    <a href="/the-real-shopee/user.php" class="user-info">User info</a>
 
                 <?php else:?>
                     <a href="/the-real-shopee/signup.php" class="user-login">Sign up</a>
@@ -146,8 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="main">
         <?php
-
-
         // Get the item ID from the query parameter
         $item_name = isset($_GET['item_name']) ? ($_GET['item_name']) : '';
         // Prepare and execute the query
@@ -179,7 +175,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<input type='hidden' name='quantity' value='1'>";
         
                 echo "<button id='add-to-cart' type='submit'>Add to cart</button>";
-                echo "<button id='buy' type='submit'>Buy now</button>";
                 echo "</form>";
 
                 echo "</div>";

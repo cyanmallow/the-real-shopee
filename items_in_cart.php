@@ -1,16 +1,17 @@
 <?php
-
 session_start();
-$conn = require __DIR__ ."/database.php";
+$conn = require __DIR__ . "/database.php";
 
-// Initialize cart items variable
-// $cart_items = [];
 $user_id = $_SESSION["user_id"];
-// retrieve cart id
+
+// Retrieve cart id
 $sql = "SELECT cart_id FROM carts WHERE user_id=?";
 $stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
 $stmt->bind_param("i", $user_id);
-$stmt-> execute();
+$stmt->execute();
 $stmt->bind_result($cart_id);
 $stmt->fetch();
 $stmt->close();
@@ -19,7 +20,7 @@ $stmt->close();
 $cart_items = getCartItems($conn, $cart_id);
 $address = getAddress($conn, $user_id);
 
-// form submissions for updating quantity and deleting items
+// Form submissions for updating quantity and deleting items
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['update_quantity'])) {
         $cart_item_id = $_POST['cart_item_id'];
@@ -30,26 +31,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cart_item_id = $_POST['cart_item_id'];
         deleteCartItem($conn, $cart_item_id);
     }
-    if ((isset($_POST['start-order'])) &&  (!$address)){
+    if ((isset($_POST['start-order'])) && $address) {
         $order_id = startOrder($conn, $user_id, $cart_id);
         $address = getAddress($conn, $user_id);
-        echo 'Ordered successfully to address ' . $address . '. Your order ID is '. $order_id;
+        echo 'Ordered successfully to address ' . htmlspecialchars($address) . '. Your order ID is ' . $order_id;
     }
-    // update cart_items
+    // Update cart items
     $cart_items = getCartItems($conn, $cart_id);
 }
 // Close connection
 $conn->close();
 
-
-/////////////////////////////////////////
-// get cart items
 function getCartItems($conn, $cart_id) {
     $sql = "SELECT ci.cart_item_id, ci.quantity, i.item_name, i.price, i.image_url
-    FROM cart_items ci JOIN items i 
-    ON ci.item_id = i.item_id
-    WHERE ci.cart_id =?";
-    $stmt = $conn   ->prepare($sql);
+            FROM cart_items ci
+            JOIN items i ON ci.item_id = i.item_id
+            WHERE ci.cart_id = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $cart_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -58,89 +59,94 @@ function getCartItems($conn, $cart_id) {
     return $items;
 }
 
-
-// when user clicked button, update item quantity
 function updateItemQuantity($conn, $cart_item_id, $quantity) {
-    $sql = "UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?;";
+    $sql = "UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("ii", $quantity, $cart_item_id);
     $stmt->execute();
     $stmt->close();
 }
 
-// remove item form cart
 function deleteCartItem($conn, $cart_item_id) {
     $sql = "DELETE FROM cart_items WHERE cart_item_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $cart_item_id);
     $stmt->execute();
     $stmt->close();
 }
 
-// get item's quantity
-// function getQuantity($conn, $item_id) {
-//     $sql = "SELECT quantity FROM items WHERE item_id =?";
-//     $stmt = $conn   ->prepare($sql);
-//     $stmt->bind_param("i", $item_id);
-//     $stmt->execute();
-//     $stmt->bind_result($quantity);
-//     $stmt->fetch();
-//     $stmt->close();
-//     return $quantity;
-// }
-
-// order 
 function startOrder($conn, $user_id, $cart_id) {
     $sql = "INSERT INTO orders(user_id, status) VALUES (?, 'Pending')";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $order_id = $stmt->insert_id;
     $stmt->close();
 
-    // move items from cart to order
-    $sql="INSERT INTO order_items (order_id, item_id, quantity, price)
+    // Move items from cart to order
+    $sql = "INSERT INTO order_items (order_id, item_id, quantity, price)
             SELECT ?, ci.item_id, ci.quantity, i.price
             FROM cart_items ci
             JOIN items i ON ci.item_id = i.item_id
             WHERE ci.cart_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("ii", $order_id, $cart_id);
     $stmt->execute();
     $stmt->close();
 
-    // decrement quantity after an order
+    // Decrement quantity after an order
     $sql = "UPDATE items i
-    JOIN cart_items ci ON i.item_id = ci.item_id
-    SET i.quantity = i.quantity - ci.quantity
-    WHERE ci.cart_id = ?";
+            JOIN cart_items ci ON i.item_id = ci.item_id
+            SET i.quantity = i.quantity - ci.quantity
+            WHERE ci.cart_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $cart_id);
     $stmt->execute();
     $stmt->close();
 
-    //clear the cart after order
-    $sql= "DELETE FROM cart_items WHERE cart_id=?";
+    // Clear the cart after order
+    $sql = "DELETE FROM cart_items WHERE cart_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cart_id) ;
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+    $stmt->bind_param("i", $cart_id);
     $stmt->execute();
     $stmt->close();
 
     return $order_id;
 }
 
-// get address to complete order
 function getAddress($conn, $user_id) {
     $sql = "SELECT address FROM users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
-    $address = $stmt->get_result();
-    $address = $address->fetch_assoc();
+    $result = $stmt->get_result();
+    $address = $result->fetch_assoc();
     $stmt->close();
-    return $address["address"];
+    return $address['address'];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

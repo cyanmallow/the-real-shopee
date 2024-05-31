@@ -28,6 +28,9 @@
                 <label for="repeat_password">Repeat password: </label><br>
                 <input type="password" maxlength="225" name="repeat_password"><br>
                 <!-- check xem co giong password ko -->
+
+                <label for="address">Address: </label><br>
+                <input type="text" maxlength="250" name="address"><br>
     
                 <button type="submit">Sign up</button>
 
