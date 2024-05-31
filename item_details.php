@@ -1,11 +1,45 @@
 <?php
 session_start();
-// echo "Form submitted!";
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 $conn = require __DIR__ ."/database.php";
 
+// Function to create a new cart
+function createNewCart($conn, $user_id) {
+    $sql = "INSERT INTO carts (user_id) VALUES (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $cart_id = $stmt->insert_id;
+    $stmt->close();
+    return $cart_id;
+}
+
 function addItemToCart($conn, $cart_id, $item_id, $quantity) {
+    // Check if the user is logged in
+    if (!isset($_SESSION["user_id"])) {
+        // die("You must be logged in to add items to the cart.");
+        header("Location: signin.php");
+        exit;
+    }
+
+    $user_id = $_SESSION["user_id"];
+
+    // Check if user has an existing cart
+    $sql = "SELECT cart_id FROM carts WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        // User has an existing cart, retrieve it
+        $stmt->bind_result($cart_id);
+        $stmt->fetch();
+    } else {
+        // No existing cart, create a new one
+        $cart_id = createNewCart($conn, $user_id);
+    }
+    $stmt->close();
+
     // Check if the item already exists in the cart
     $sql = "SELECT quantity FROM cart_items WHERE cart_id = ? AND item_id = ?";
     $stmt = $conn->prepare($sql);
@@ -53,52 +87,16 @@ function addItemToCart($conn, $cart_id, $item_id, $quantity) {
     $stmt->close();
 }
 
-// Check if the user is logged in
-if (!isset($_SESSION["user_id"])) {
-    die("You must be logged in to add items to the cart.");
-}
-
-$user_id = $_SESSION["user_id"];
-// $cart_id = $_SESSION["cart_id"];
-
-// Check if user has an existing cart
-$sql = "SELECT cart_id FROM carts WHERE user_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->store_result();
-
-if ($stmt->num_rows > 0) {
-    // User has an existing cart, retrieve it
-    $stmt->bind_result($cart_id);
-    $stmt->fetch();
-} else {
-    // No existing cart, create a new one
-    $cart_id = createNewCart($conn, $user_id);
-}
-$stmt->close();
-
-// Function to create a new cart
-function createNewCart($conn, $user_id) {
-    $sql = "INSERT INTO carts (user_id) VALUES (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $cart_id = $stmt->insert_id;
-    $stmt->close();
-    return $cart_id;
-}
-
-//////////////////////
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_id = $_SESSION["user_id"];
+    $cart_id = $_SESSION["cart_id"];
+
     $item_id = $_POST['item_id'];
     $quantity = $_POST['quantity'];
     addItemToCart($conn, $cart_id, $item_id, $quantity);
     header("Location: items_in_cart.php");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
