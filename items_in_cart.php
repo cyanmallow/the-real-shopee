@@ -1,19 +1,8 @@
 <?php
 
 session_start();
-// Database connection details
-$servername = "localhost";
-$username = "root"; 
-$password = ""; 
-$dbname = "shopping-db"; 
+$conn = require __DIR__ ."/database.php";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 // Initialize cart items variable
 // $cart_items = [];
 $user_id = $_SESSION["user_id"];
@@ -68,6 +57,8 @@ function getCartItems($conn, $cart_id) {
     $stmt->close();
     return $items;
 }
+
+
 // when user clicked button, update item quantity
 function updateItemQuantity($conn, $cart_item_id, $quantity) {
     $sql = "UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?;";
@@ -85,6 +76,19 @@ function deleteCartItem($conn, $cart_item_id) {
     $stmt->execute();
     $stmt->close();
 }
+
+// get item's quantity
+// function getQuantity($conn, $item_id) {
+//     $sql = "SELECT quantity FROM items WHERE item_id =?";
+//     $stmt = $conn   ->prepare($sql);
+//     $stmt->bind_param("i", $item_id);
+//     $stmt->execute();
+//     $stmt->bind_result($quantity);
+//     $stmt->fetch();
+//     $stmt->close();
+//     return $quantity;
+// }
+
 // order 
 function startOrder($conn, $user_id, $cart_id) {
     $sql = "INSERT INTO orders(user_id, status) VALUES (?, 'Pending')";
@@ -102,6 +106,16 @@ function startOrder($conn, $user_id, $cart_id) {
             WHERE ci.cart_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $order_id, $cart_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // decrement quantity after an order
+    $sql = "UPDATE items i
+    JOIN cart_items ci ON i.item_id = ci.item_id
+    SET i.quantity = i.quantity - ci.quantity
+    WHERE ci.cart_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cart_id);
     $stmt->execute();
     $stmt->close();
 

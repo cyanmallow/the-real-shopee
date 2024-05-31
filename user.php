@@ -1,10 +1,11 @@
+<!-- moved to change user's data -->
 <?php
 session_start();
-$conn = require __DIR__ .("/database.php");
+$conn = require __DIR__ ."/database.php";
 
 $user_id = $_SESSION["user_id"];
 
-// username
+// fetch username and address
 $sql = "SELECT username, address FROM users WHERE user_id=?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
@@ -13,40 +14,8 @@ $stmt->bind_result($username, $address);
 $stmt->fetch();
 $stmt->close();
 
-
-// form submissions for updating quantity and deleting items
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['update_quantity'])) {
-        $cart_item_id = $_POST['cart_item_id'];
-        $quantity = $_POST['quantity'];
-        updateItemQuantity($conn, $cart_item_id, $quantity);
-    }
-    if (isset($_POST['delete_item'])) {
-        $cart_item_id = $_POST['cart_item_id'];
-        deleteCartItem($conn, $cart_item_id);
-    }
-    if ((isset($_POST['start-order'])) &&  (!$address)){
-        $order_id = startOrder($conn, $user_id, $cart_id);
-        $address = getAddress($conn, $user_id);
-        echo 'Ordered successfully to address ' . $address . '. Your order ID is '. $order_id;
-    }
-    // update cart_items
-    $cart_items = getCartItems($conn, $cart_id);
-}
 // Close connection
 $conn->close();
-
-// get address to complete order
-function getAddress($conn, $user_id) {
-    $sql = "SELECT address FROM users WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $address = $stmt->get_result();
-    $address = $address->fetch_assoc();
-    $stmt->close();
-    return $address["address"];
-}
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +25,7 @@ function getAddress($conn, $user_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/the-real-shopee/sites/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
-
+    <title>Change address</title>
 </head>
 <body>
     <div class="container">
@@ -93,9 +62,11 @@ function getAddress($conn, $user_id) {
                 echo "User ID: ". $user_id; ?><br><?php
                 echo "Address: ". $address; ?><br><?php
             ?>
-            <button id="changeUserData">Change</button>
+            <form action="change_user_data.php" method="POST">
+                <input type="text" name="new_address" placeholder="New address">
+                <button type="submit">Change</button>
+            </form>
         </div>
-
 
         <div class="contact">
             <table>
